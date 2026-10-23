@@ -1,0 +1,23 @@
+- insert:
+    - id: workspace-memory
+      name: 'dsh-workspace-memory'
+      config:
+        scope: project
+        memoryRoot: ''
+        maxInjectBytes: 8192
+        maxBriefBytes: 6144
+        maxNotesBytes: 2048
+        maxSessions: 5
+        maxTurnsPerSession: 4
+        maxEventsPerSession: 800
+        includeSubagents: false
+        curator:
+          provider: ''
+          model: ''
+          maxTokens: 2000
+          temperature: 0.2
+          timeoutMs: 90000
+          maxInputBytes: 16384
+        redactPatterns:
+          - 'sk-[A-Za-z0-9]{16,}'
+          - 'Bearer\\s+[A-Za-z0-9._-]+'

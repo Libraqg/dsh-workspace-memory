@@ -1,0 +1,68 @@
+{
+  "name": "dsh-workspace-memory",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Explicit, project-scoped memory handoff for DeepSeek Harness: one confirmed model call curates earlier conversations into a bounded brief and injects it into a new conversation. No silent background calls.",
+  "license": "MIT",
+  "author": "libraqg",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "memory",
+    "context",
+    "handoff",
+    "cordis",
+    "plugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/libraqg/dsh-workspace-memory.git"
+  },
+  "homepage": "https://github.com/libraqg/dsh-workspace-memory#readme",
+  "bugs": {
+    "url": "https://github.com/libraqg/dsh-workspace-memory/issues"
+  },
+  "engines": {
+    "node": ">=22.19.0",
+    "dsh": ">=0.2.1-rc.2"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "lib/*.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-ui-session",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-layout"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "check": "node --check index.js && node --check client.js && node --check lib/config.js && node --check lib/curator.js && node --check lib/digest.js && node --check lib/inject.js && node --check lib/paths.js && node --check lib/redact.js && node --check lib/store.js"
+  }
+}
