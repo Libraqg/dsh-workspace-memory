@@ -3,6 +3,7 @@
   <h1>dsh-workspace-memory</h1>
   <p><strong>为 DeepSeek Harness 提供“显式、项目级”的记忆交接。</strong><br/>
   一次确认，一次模型调用，没有静默后台调用。</p>
+  <p><strong>分类：</strong> 记忆与上下文 · <strong>许可证：</strong> MIT · <strong>安装：</strong> GitHub 源码</p>
   <p><a href="README.md">English</a> | 中文</p>
   <p>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT"></a>
@@ -84,16 +85,26 @@
 
 ### 从 GitHub 安装
 
+当前通过 GitHub 源码安装，**尚未发布 npm 包**，因此不会出现在 DSH 内置插件中心；dsh-plugin.org 仍可用下面的源码安装命令收录。
+
+Web profile：
+
 ```bash
-dsh plugin --profile desktop add github:libraqg/dsh-workspace-memory
+dsh plugin --profile web add github:Libraqg/dsh-workspace-memory
 ```
 
-如果使用 Web profile，把 `desktop` 换成 `web`；其他 profile 同理。安装后重启 DSH profile，并刷新 Web 页面。
+Desktop profile：
+
+```bash
+dsh plugin --profile desktop add github:Libraqg/dsh-workspace-memory
+```
+
+把 `web` / `desktop` 换成你实际使用的 profile。安装后重启 DSH profile，并刷新 Web 页面。
 
 ### 从本地目录安装
 
 ```bash
-git clone https://github.com/libraqg/dsh-workspace-memory.git
+git clone https://github.com/Libraqg/dsh-workspace-memory.git
 dsh plugin --profile desktop add "$PWD/dsh-workspace-memory"
 ```
 
@@ -165,6 +176,13 @@ Desktop 应用里如果 `dsh` 不在 PATH，可在 **设置 → 插件 → 安�
 确认层需要 Host 侧的状态（来源、整理路由、token 估算），当前通过 DSH 的本地命令通道读取：`/memory inject-status --json` 和 `/memory status --json`。它们是**本地命令，不是模型调用**：不进入模型上下文，也不消耗 token。
 
 DSH 会记录命令执行，所以在 **detailed transcript** 里可能看到 `memory` 命令行。现在已经去掉了“挂载时自动查询”，正常打开空白对话不会自己产生命令记录；只有你悬停、点击或打开面板时才会查询。
+
+## 权限
+
+- 读取同一项目里旧对话的 DSH 会话日志，以及 `~/.dsh/workspace-memory/` 下的本地记忆文件。
+- 只写当前项目的 `brief.md`、`notes.md`、`state.json`。
+- 只在你确认 **整理并注入** 后调用一次选定的 LLM 路由；没有其他网络请求。
+- 没有 telemetry。
 
 ## 隐私与安全
 

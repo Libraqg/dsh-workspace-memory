@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Explicit, project-scoped memory handoff for DeepSeek Harness: one confirmed model call curates earlier conversations into a bounded brief and injects it into a new conversation. No silent background calls.",
   "license": "MIT",
-  "author": "libraqg",
+  "author": "Libraqg",
   "keywords": [
     "dsh",
     "dsh-plugin",
@@ -17,11 +17,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/libraqg/dsh-workspace-memory.git"
+    "url": "https://github.com/Libraqg/dsh-workspace-memory.git"
   },
-  "homepage": "https://github.com/libraqg/dsh-workspace-memory#readme",
+  "homepage": "https://github.com/Libraqg/dsh-workspace-memory#readme",
   "bugs": {
-    "url": "https://github.com/libraqg/dsh-workspace-memory/issues"
+    "url": "https://github.com/Libraqg/dsh-workspace-memory/issues"
   },
   "engines": {
     "node": ">=22.19.0",

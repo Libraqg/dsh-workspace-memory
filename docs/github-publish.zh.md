@@ -2,7 +2,11 @@
 
 目标：创建一个公开仓库，把本地代码推上去，加上 `dsh-plugin` topic，然后提交到 DSH Plugin Hub / Awesome DSH Plugin。
 
-> 先确认 GitHub 用户名。本仓库里的链接目前按本机 git 配置写成了 `libraqg`。如果你的用户名不是 `libraqg`，先把下面文件里的 `libraqg` 换成你的用户名：
+> 当前仓库已经存在并推送过：<https://github.com/Libraqg/dsh-workspace-memory>。如果你只是更新，直接从第 3 步开始；第 1、2 步仅用于重新创建仓库。
+>
+> Hub 的完整提交标题/正文/自查模板在 [submission/dsh-plugin-hub.md](../submission/dsh-plugin-hub.md)。
+
+> 本仓库当前的 GitHub owner 是 `Libraqg`。如果你以后改了用户名或转移到组织，请把下面文件里的 `Libraqg` 替换成新的 owner：
 >
 > `README.md`、`README.zh.md`、`package.json`、`docs/publishing.md`、`docs/launch-post.md`、`submission/awesome-entry.md`
 >
@@ -11,7 +15,7 @@
 > ```bash
 > cd /Users/ganquan/Documents/deepseek-harness/default-workspace/dsh-workspace-memory
 > for f in README.md README.zh.md package.json docs/publishing.md docs/launch-post.md submission/awesome-entry.md; do
->   sed -i '' 's/libraqg/YOUR_NAME/g' "$f"
+>   sed -i '' 's/Libraqg/YOUR_NAME/g' "$f"
 > done
 > ```
 
@@ -110,7 +114,7 @@ GitHub topic 只是“被扫描到”的标记；要出现在插件市场的列�
 - [YOUR_NAME/dsh-workspace-memory](https://github.com/YOUR_NAME/dsh-workspace-memory) - Explicit, user-triggered project memory for DSH: one confirmed model call curates earlier conversations into a bounded brief and injects it after the first message of a new conversation; no background capture or silent model calls.
 ```
 
-`submission/awesome-entry.md` 里已经准备好了这段文字，把 `libraqg` 换成你的用户名即可。
+`submission/awesome-entry.md` 里已经准备好了这段文字；如果 owner 变了，替换 `Libraqg`。
 
 ## 7. 发布 Release（可选但推荐）
 
@@ -125,7 +129,7 @@ Release 不是收录的硬性条件，但能让插件看起来更正式，也方
 ## 8. 常见问题
 
 - **搜索不到我的插件**：先确认仓库是 Public，且 `dsh-plugin` topic 已保存在 About 里；topic 页面刷新有延迟。
-- **README 的安装命令 404**：把 `YOUR_NAME` 或 `libraqg` 换成实际用户名，确认仓库名拼写一致。
+- **README 的安装命令 404**：确认 owner 是 `Libraqg`（或你改后的名字），仓库名拼写一致。
 - **插件能装但市场没收录**：topic 只是扫描入口；还要到 <https://dsh-plugin.org/zh/submit> 提交。
 - **推送时提示 non-fast-forward**：远端仓库不是空的；重新建一个空仓库，或先 `git pull --rebase origin main`。
 - **不想公开**：DSH Plugin Hub 只收录公开仓库；私有仓库无法被自动扫描。

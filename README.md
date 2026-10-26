@@ -3,6 +3,7 @@
   <h1>dsh-workspace-memory</h1>
   <p><strong>Explicit, project-scoped memory handoff for DeepSeek Harness.</strong><br/>
   One confirmation. One model call. No silent background calls.</p>
+  <p><strong>Category:</strong> Memory &amp; Context · <strong>License:</strong> MIT · <strong>Install:</strong> GitHub source</p>
   <p>English | <a href="README.zh.md">中文</a></p>
   <p>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT"></a>
@@ -112,16 +113,26 @@ Verify against the files before acting.
 
 ### Install from GitHub
 
+This release is installed from GitHub. It is **not published on npm yet**, so it does not appear in the in-DSH Plugin Center; dsh-plugin.org can still list it with the source install command below.
+
+Web profile:
+
 ```bash
-dsh plugin --profile desktop add github:libraqg/dsh-workspace-memory
+dsh plugin --profile web add github:Libraqg/dsh-workspace-memory
 ```
 
-For a DSH Web profile use `--profile web` instead of `desktop`. If your profile has another name, use that name. Restart the DSH profile after installation, then refresh the Web UI.
+Desktop profile:
+
+```bash
+dsh plugin --profile desktop add github:Libraqg/dsh-workspace-memory
+```
+
+Use the profile name that matches your DSH installation. Restart the DSH profile after installation, then refresh the Web UI.
 
 ### Install from a local checkout
 
 ```bash
-git clone https://github.com/libraqg/dsh-workspace-memory.git
+git clone https://github.com/Libraqg/dsh-workspace-memory.git
 dsh plugin --profile desktop add "$PWD/dsh-workspace-memory"
 ```
 
@@ -193,6 +204,13 @@ The confirmation dialog shows all three estimates. They are local heuristics, no
 The confirmation layer needs host-side status (sources, curator route, token estimates). It reads that through DSH's local command channel (`/memory inject-status --json` and `/memory status --json`). These are **local commands, not model calls**: they never enter model context and cost no tokens.
 
 DSH logs command executions, so a `memory` command row can appear in the **detailed transcript** when you hover, click, or open the panel. The UI no longer queries status on mount, so opening a blank conversation should not create a command row by itself.
+
+## Permissions
+
+- Reads DSH session logs for earlier conversations in the same project, plus local memory files under `~/.dsh/workspace-memory/`.
+- Writes only `brief.md`, `notes.md`, and `state.json` for the current project.
+- Calls the selected LLM route exactly once after you confirm **Curate and inject**; no other network requests.
+- Adds no telemetry.
 
 ## Privacy and security
 

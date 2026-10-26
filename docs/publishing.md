@@ -2,7 +2,7 @@
 
 中文逐步说明（创建 GitHub 仓库、推送、添加 topic、提交 Hub）: [github-publish.zh.md](github-publish.zh.md)
 
-This repository is ready to be published as a public GitHub repository and submitted to the DSH plugin ecosystem. Replace `libraqg` with your GitHub username or organization if it differs.
+This repository is ready to be published as a public GitHub repository and submitted to the DSH plugin ecosystem. The canonical GitHub owner is `Libraqg`; replace it if the repository moves.
 
 ## 1. Create the public repository
 
@@ -32,16 +32,16 @@ The first topic is the one DSH plugin indexers look for. Do not omit it.
 cd dsh-workspace-memory
 git init
 git add .
-git commit -m "Initial release: dsh-workspace-memory 0.1.0"
+git commit -m "Initial release: @libraqg/dsh-workspace-memory 0.1.1"
 git branch -M main
-git remote add origin git@github.com:libraqg/dsh-workspace-memory.git
+git remote add origin git@github.com:Libraqg/dsh-workspace-memory.git
 git push -u origin main
 ```
 
 If you use HTTPS instead of SSH:
 
 ```bash
-git remote add origin https://github.com/libraqg/dsh-workspace-memory.git
+git remote add origin https://github.com/Libraqg/dsh-workspace-memory.git
 ```
 
 ## 3. Verify the install command
@@ -49,7 +49,8 @@ git remote add origin https://github.com/libraqg/dsh-workspace-memory.git
 On a clean DSH profile, run the exact command from the README:
 
 ```bash
-dsh plugin --profile desktop add github:libraqg/dsh-workspace-memory
+dsh plugin --profile web add github:Libraqg/dsh-workspace-memory
+dsh plugin --profile desktop add github:Libraqg/dsh-workspace-memory
 ```
 
 Then restart the profile, refresh the Web UI, and verify:
@@ -64,7 +65,9 @@ If your default profile is `web`, substitute `--profile web` in the README and t
 
 ## 4. Submit to DSH Plugin Hub
 
-The Hub auto-scans public repositories. Submission is free.
+The repository already exists at <https://github.com/Libraqg/dsh-workspace-memory>. If you are starting from a fresh clone, skip the repository-creation steps and push `main` + tags.
+
+The Hub auto-scans public repositories. Submission is free. A ready-to-submit issue (title, body, checklist) is in [submission/dsh-plugin-hub.md](../submission/dsh-plugin-hub.md).
 
 1. Open <https://dsh-plugin.org/zh/submit> (or the English submit page linked from <https://dsh-plugin.org>).
 2. Submit the repository URL.

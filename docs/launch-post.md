@@ -33,7 +33,7 @@
 ## 安装
 
 ```bash
-dsh plugin --profile desktop add github:libraqg/dsh-workspace-memory
+dsh plugin --profile desktop add github:Libraqg/dsh-workspace-memory
 ```
 
 Web profile 把 `desktop` 换成 `web`。安装后重启 DSH profile，刷新页面。
@@ -50,7 +50,7 @@ Web profile 把 `desktop` 换成 `web`。安装后重启 DSH profile，刷新页
 
 ## 链接
 
-- 仓库：<https://github.com/libraqg/dsh-workspace-memory>
+- 仓库：<https://github.com/Libraqg/dsh-workspace-memory>
 - 演示：仓库 README 中的 GIF / MP4
 - 许可证：MIT
 

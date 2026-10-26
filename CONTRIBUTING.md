@@ -17,7 +17,7 @@ Thanks for taking a look. This project is deliberately small; the constraints be
 Requirements: Node.js `>=22.19.0`. There is no build step and no runtime dependency.
 
 ```bash
-git clone https://github.com/libraqg/dsh-workspace-memory.git
+git clone https://github.com/Libraqg/dsh-workspace-memory.git
 cd dsh-workspace-memory
 npm test
 npm run check
