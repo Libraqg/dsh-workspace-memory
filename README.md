@@ -18,7 +18,7 @@
 </p>
 
 <p align="center">
-  <a href="assets/demo.mp4">Watch the full 24-second demo (MP4)</a>
+  <a href="https://github.com/Libraqg/dsh-workspace-memory/blob/main/assets/demo.mp4">Watch the full 24-second demo (MP4)</a>
 </p>
 
 ## The problem
@@ -111,9 +111,25 @@ Verify against the files before acting.
 - Node.js `>=22.19.0` (the DSH runtime requirement).
 - A working DSH model route. The default curator uses the current conversation's model; you can override it per project.
 
+### Install from npm
+
+The npm package is `@libraqg/dsh-workspace-memory`:
+
+```bash
+dsh plugin --profile web add @libraqg/dsh-workspace-memory
+```
+
+Desktop profile:
+
+```bash
+dsh plugin --profile desktop add @libraqg/dsh-workspace-memory
+```
+
+If the npm release is not available yet, use the GitHub source install below.
+
 ### Install from GitHub
 
-This release is installed from GitHub. It is **not published on npm yet**, so it does not appear in the in-DSH Plugin Center; dsh-plugin.org can still list it with the source install command below.
+Source installs work without npm and are what dsh-plugin.org uses while the package is GitHub-only.
 
 Web profile:
 

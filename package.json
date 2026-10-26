@@ -1,6 +1,6 @@
 {
   "name": "@libraqg/dsh-workspace-memory",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "Explicit, project-scoped memory handoff for DeepSeek Harness: one confirmed model call curates earlier conversations into a bounded brief and injects it into a new conversation. No silent background calls.",
   "license": "MIT",
@@ -41,6 +41,8 @@
     "cordis.patch.yml",
     "locale/*.json",
     "icon.svg",
+    "assets/*.png",
+    "assets/demo.gif",
     "README.md",
     "README.zh.md",
     "LICENSE"
@@ -63,6 +65,10 @@
   },
   "scripts": {
     "test": "node --test test/*.test.js",
-    "check": "node --check index.js && node --check client.js && node --check lib/config.js && node --check lib/curator.js && node --check lib/digest.js && node --check lib/inject.js && node --check lib/paths.js && node --check lib/redact.js && node --check lib/store.js"
+    "check": "node --check index.js && node --check client.js && node --check lib/config.js && node --check lib/curator.js && node --check lib/digest.js && node --check lib/inject.js && node --check lib/paths.js && node --check lib/redact.js && node --check lib/store.js",
+    "prepublishOnly": "npm test && npm run check"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

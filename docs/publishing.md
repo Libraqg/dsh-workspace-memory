@@ -86,16 +86,41 @@ Before opening the PR, check the list's current contribution guide:
 
 Keep the entry to one line: link + a factual description of what it does. Do not claim "official" or benchmark results you cannot show.
 
-## 6. Optional: publish to npm / dsh-market
+## 6. Publish to npm (required for the in-DSH Plugin Center)
 
-The primary install path is GitHub. If you also want npm and dsh-market discovery:
+The primary install path is GitHub. The in-DSH Plugin Center requires an npm package. The package is already prepared:
 
-1. Choose a scoped package name, for example `@libraqg/dsh-workspace-memory` (the unscoped `dsh-workspace-memory` may be taken).
-2. Update `package.json` `name`, repository, and README install commands.
-3. `npm publish --access public`.
-4. Add the npm package to dsh-market's index flow if that market asks for npm packages with a known version.
+1. Sign in to npm and confirm the scope. The package name is `@libraqg/dsh-workspace-memory`; the npm account or organization must own `@libraqg`. If not, change the package name and the matching identities (`cordis.patch.yml` row name, `client.js` module id, test expectation, README commands).
+2. ```bash
+   npm login
+   npm whoami
+   npm view @libraqg/dsh-workspace-memory version
+   ```
+   A 404 on `npm view` means the name is available.
+3. Inspect the tarball:
+   ```bash
+   npm pack --dry-run
+   ```
+   It should include `index.js`, `client.js`, `lib/`, `locale/`, `cordis.patch.yml`, `icon.svg`, `assets/*.png`, `assets/demo.gif`, README, and LICENSE. It must not include the 24-second MP4, the `.mov` recording, tests, or `node_modules`.
+4. Publish:
+   ```bash
+   npm publish --access public
+   ```
+   If 2FA is enabled, add `--otp=123456`.
+5. Verify and install:
+   ```bash
+   npm view @libraqg/dsh-workspace-memory version
+   dsh plugin --profile web add @libraqg/dsh-workspace-memory
+   dsh plugin --profile desktop add @libraqg/dsh-workspace-memory
+   ```
+6. Bump versions for future releases:
+   ```bash
+   npm version patch   # or minor/major
+   npm publish --access public
+   git push --follow-tags
+   ```
 
-Do not change the package name in the middle of a release without updating the README, `dsh.bundle` row, and install command.
+`package.json` already has `publishConfig.access: public` and `prepublishOnly: npm test && npm run check`, so a broken test or syntax error blocks publication.
 
 ## 7. Release checklist
 

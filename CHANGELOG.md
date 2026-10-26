@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2 — 2026-10-26
+
+- npm packaging readiness: `publishConfig.access: public`, `prepublishOnly` checks, and README/GIF assets included in the package.
+- Added npm install instructions for both Web and Desktop profiles.
+- No runtime behavior change.
+
 ## 0.1.1 — 2026-10-26
 
 - Removed automatic status queries on Hero/composer mount, which could create two `memory` command rows before the user clicked anything.

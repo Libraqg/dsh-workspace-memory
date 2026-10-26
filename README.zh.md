@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="assets/demo.mp4">观看完整 24 秒演示（MP4）</a>
+  <a href="https://github.com/Libraqg/dsh-workspace-memory/blob/main/assets/demo.mp4">观看完整 24 秒演示（MP4）</a>
 </p>
 
 ## 它解决什么问题
@@ -83,9 +83,25 @@
 - Node.js `>=22.19.0`。
 - 一个可用的 DSH 模型路由。默认整理模型 = 当前对话模型，也可以按项目覆盖。
 
+### 从 npm 安装
+
+npm 包名是 `@libraqg/dsh-workspace-memory`：
+
+```bash
+dsh plugin --profile web add @libraqg/dsh-workspace-memory
+```
+
+Desktop profile：
+
+```bash
+dsh plugin --profile desktop add @libraqg/dsh-workspace-memory
+```
+
+如果 npm 上还没有这个版本，用下面的 GitHub 源码安装。
+
 ### 从 GitHub 安装
 
-当前通过 GitHub 源码安装，**尚未发布 npm 包**，因此不会出现在 DSH 内置插件中心；dsh-plugin.org 仍可用下面的源码安装命令收录。
+源码安装不依赖 npm；npm 包发布前，dsh-plugin.org 会用下面的源码安装命令收录。
 
 Web profile：
 
