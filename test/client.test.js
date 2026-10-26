@@ -13,7 +13,7 @@ test('client bundle registers hero, sidebar and main entries', async () => {
 
   await import(`${new URL('../client.js', import.meta.url).href}?test=1`)
   assert.ok(loaded, 'module loader received the bundle')
-  assert.equal(loaded.id, 'dsh-workspace-memory')
+  assert.equal(loaded.id, '@libraqg/dsh-workspace-memory')
 
   const React = {
     createElement() {

@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-  id: 'dsh-workspace-memory',
+  id: '@libraqg/dsh-workspace-memory',
   factory(require) {
     const React = require('react')
     const h = React.createElement

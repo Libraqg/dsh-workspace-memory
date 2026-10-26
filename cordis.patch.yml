@@ -1,6 +1,6 @@
 - insert:
     - id: workspace-memory
-      name: 'dsh-workspace-memory'
+      name: '@libraqg/dsh-workspace-memory'
       config:
         scope: project
         memoryRoot: ''

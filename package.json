@@ -1,5 +1,5 @@
 {
-  "name": "dsh-workspace-memory",
+  "name": "@libraqg/dsh-workspace-memory",
   "version": "0.1.0",
   "type": "module",
   "description": "Explicit, project-scoped memory handoff for DeepSeek Harness: one confirmed model call curates earlier conversations into a bounded brief and injects it into a new conversation. No silent background calls.",
