@@ -90,7 +90,7 @@ Keep the entry to one line: link + a factual description of what it does. Do not
 
 ## 6. Publish to npm (required for the in-DSH Plugin Center)
 
-The primary install path is GitHub. The in-DSH Plugin Center requires an npm package. The package is already prepared:
+`@libraqg/dsh-workspace-memory@0.1.2` is published on npm. The in-DSH Plugin Center requires an npm package, so the package now qualifies. For a new release, bump the version and publish again:
 
 1. Sign in to npm and confirm the scope. The package name is `@libraqg/dsh-workspace-memory`; the npm account or organization must own `@libraqg`. If not, change the package name and the matching identities (`cordis.patch.yml` row name, `client.js` module id, test expectation, README commands).
 2. ```bash

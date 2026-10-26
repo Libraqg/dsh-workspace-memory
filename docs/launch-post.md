@@ -33,7 +33,7 @@
 ## 安装
 
 ```bash
-dsh plugin --profile desktop add github:Libraqg/dsh-workspace-memory
+dsh plugin --profile desktop add @libraqg/dsh-workspace-memory
 ```
 
 Web profile 把 `desktop` 换成 `web`。安装后重启 DSH profile，刷新页面。

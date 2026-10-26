@@ -3,12 +3,13 @@
   <h1>dsh-workspace-memory</h1>
   <p><strong>为 DeepSeek Harness 提供“显式、项目级”的记忆交接。</strong><br/>
   一次确认，一次模型调用，没有静默后台调用。</p>
-  <p><strong>分类：</strong> 记忆与上下文 · <strong>许可证：</strong> MIT · <strong>安装：</strong> GitHub 源码</p>
+  <p><strong>分类：</strong> 记忆与上下文 · <strong>许可证：</strong> MIT · <strong>安装：</strong> npm 0.1.2 / GitHub 源码</p>
   <p><a href="README.md">English</a> | 中文</p>
   <p>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT"></a>
     <img src="https://img.shields.io/badge/DSH-%3E%3D0.2.1--rc.2-6f42c1" alt="DSH >= 0.2.1-rc.2">
     <img src="https://img.shields.io/badge/node-%3E%3D22.19-339933" alt="Node >= 22.19">
+    <a href="https://www.npmjs.com/package/@libraqg/dsh-workspace-memory"><img src="https://img.shields.io/npm/v/@libraqg/dsh-workspace-memory.svg" alt="npm"></a>
   </p>
 </div>
 
@@ -103,11 +104,11 @@ Desktop 应用里 `dsh` 通常不在 PATH，可以用已发布的 CLI 运行：
 npx --yes @deepseek-ai/dsh plugin --profile desktop add @libraqg/dsh-workspace-memory
 ```
 
-如果 npm 上还没有这个版本，用下面的 GitHub 源码安装。
+因为已经发布到 npm，它符合 DSH 内置插件中心“一条命令安装”的条件。
+
+如果你不想用 npm，也可以用下面的 GitHub 源码安装作为备用。
 
 ### 从 GitHub 安装
-
-源码安装不依赖 npm；npm 包发布前，dsh-plugin.org 会用下面的源码安装命令收录。
 
 Web profile：
 

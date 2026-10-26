@@ -3,12 +3,13 @@
   <h1>dsh-workspace-memory</h1>
   <p><strong>Explicit, project-scoped memory handoff for DeepSeek Harness.</strong><br/>
   One confirmation. One model call. No silent background calls.</p>
-  <p><strong>Category:</strong> Memory &amp; Context · <strong>License:</strong> MIT · <strong>Install:</strong> GitHub source</p>
+  <p><strong>Category:</strong> Memory &amp; Context · <strong>License:</strong> MIT · <strong>Install:</strong> npm 0.1.2 / GitHub source</p>
   <p>English | <a href="README.zh.md">中文</a></p>
   <p>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT"></a>
     <img src="https://img.shields.io/badge/DSH-%3E%3D0.2.1--rc.2-6f42c1" alt="DSH >= 0.2.1-rc.2">
     <img src="https://img.shields.io/badge/node-%3E%3D22.19-339933" alt="Node >= 22.19">
+    <a href="https://www.npmjs.com/package/@libraqg/dsh-workspace-memory"><img src="https://img.shields.io/npm/v/@libraqg/dsh-workspace-memory.svg" alt="npm"></a>
     <a href="https://github.com/awesome-dsh-plugin/awesome-dsh-plugin"><img src="https://awesome-dsh-plugin.com/badge.svg" alt="DSH plugin"></a>
   </p>
 </div>
@@ -131,11 +132,11 @@ If the `dsh` command is not on your `PATH` (common in the Desktop app), run the 
 npx --yes @deepseek-ai/dsh plugin --profile desktop add @libraqg/dsh-workspace-memory
 ```
 
-If the npm release is not available yet, use the GitHub source install below.
+Because it is on npm, it is eligible for the in-DSH Plugin Center one-command install.
+
+If you prefer not to use npm, the GitHub source install is available as a fallback.
 
 ### Install from GitHub
-
-Source installs work without npm and are what dsh-plugin.org uses while the package is GitHub-only.
 
 Web profile:
 
