@@ -53,6 +53,8 @@ dsh plugin --profile web add github:Libraqg/dsh-workspace-memory
 dsh plugin --profile desktop add github:Libraqg/dsh-workspace-memory
 ```
 
+If `dsh` is not on `PATH`, use `npx --yes @deepseek-ai/dsh plugin ...` with the same arguments.
+
 Then restart the profile, refresh the Web UI, and verify:
 
 - the **Inject memory** button appears on a blank non-first conversation in a project with content;

@@ -125,6 +125,12 @@ Desktop profile:
 dsh plugin --profile desktop add @libraqg/dsh-workspace-memory
 ```
 
+If the `dsh` command is not on your `PATH` (common in the Desktop app), run the same command through the published CLI:
+
+```bash
+npx --yes @deepseek-ai/dsh plugin --profile desktop add @libraqg/dsh-workspace-memory
+```
+
 If the npm release is not available yet, use the GitHub source install below.
 
 ### Install from GitHub
@@ -152,7 +158,11 @@ git clone https://github.com/Libraqg/dsh-workspace-memory.git
 dsh plugin --profile desktop add "$PWD/dsh-workspace-memory"
 ```
 
-If the `dsh` command is not on your `PATH` in the Desktop app, use **Settings → Plugins → Install** with the repository URL or local directory, or use the bundled DSH CLI.
+If the `dsh` command is not on your `PATH` in the Desktop app, use **Settings → Plugins → Install** with the repository URL or local directory, or run:
+
+```bash
+npx --yes @deepseek-ai/dsh plugin --profile desktop add github:Libraqg/dsh-workspace-memory
+```
 
 No native dependencies or build scripts are required.
 

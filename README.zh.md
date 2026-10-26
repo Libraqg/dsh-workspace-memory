@@ -97,6 +97,12 @@ Desktop profile：
 dsh plugin --profile desktop add @libraqg/dsh-workspace-memory
 ```
 
+Desktop 应用里 `dsh` 通常不在 PATH，可以用已发布的 CLI 运行：
+
+```bash
+npx --yes @deepseek-ai/dsh plugin --profile desktop add @libraqg/dsh-workspace-memory
+```
+
 如果 npm 上还没有这个版本，用下面的 GitHub 源码安装。
 
 ### 从 GitHub 安装
@@ -124,7 +130,11 @@ git clone https://github.com/Libraqg/dsh-workspace-memory.git
 dsh plugin --profile desktop add "$PWD/dsh-workspace-memory"
 ```
 
-Desktop 应用里如果 `dsh` 不在 PATH，可在 **设置 → 插件 → 安装** 里选择 GitHub 地址或本地目录。
+Desktop 应用里如果 `dsh` 不在 PATH，可在 **设置 → 插件 → 安装** 里选择 GitHub 地址或本地目录，或运行：
+
+```bash
+npx --yes @deepseek-ai/dsh plugin --profile desktop add github:Libraqg/dsh-workspace-memory
+```
 
 不需要原生依赖，也不需要 build script 审批。
 
