@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 — 2026-10-26
+
+- Removed automatic status queries on Hero/composer mount, which could create two `memory` command rows before the user clicked anything.
+- Status reads are now on-demand (hover/click/panel open) and shared through a short-lived client cache.
+- Documented that status checks are local DSH commands, not model calls, and may appear as command rows in the detailed transcript.
+
 ## 0.1.0 — 2026-10-24
 
 - Initial public release.

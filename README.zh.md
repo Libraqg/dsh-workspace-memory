@@ -159,6 +159,13 @@ Desktop 应用里如果 `dsh` 不在 PATH，可在 **设置 → 插件 → 安�
 
 确认层会显示这三段估算；它们是本地启发式，不等于实际计费。面板会记录 provider 返回的 usage（如果有）。
 
+
+### 状态查询与轨迹显示
+
+确认层需要 Host 侧的状态（来源、整理路由、token 估算），当前通过 DSH 的本地命令通道读取：`/memory inject-status --json` 和 `/memory status --json`。它们是**本地命令，不是模型调用**：不进入模型上下文，也不消耗 token。
+
+DSH 会记录命令执行，所以在 **detailed transcript** 里可能看到 `memory` 命令行。现在已经去掉了“挂载时自动查询”，正常打开空白对话不会自己产生命令记录；只有你悬停、点击或打开面板时才会查询。
+
 ## 隐私与安全
 
 - 记忆保存在本机：`~/.dsh/workspace-memory/<project-hash>/`。

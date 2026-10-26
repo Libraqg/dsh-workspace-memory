@@ -119,6 +119,10 @@ The panel is read/manage-only and never calls a model: brief preview, notes edit
 
 The client declares `remote.commands` in its `inject` list. Accessing `ctx.remote.commands` without that declaration fails with `cannot get property "remote.commands" without inject`.
 
+## Status reads and transcript rows
+
+The confirmation layer reads host-side status through DSH commands (`inject-status`/`status`). These are local commands, not model calls; they never enter model context or cost tokens. DSH logs command executions, so a `memory` row can appear in the detailed transcript when the user hovers, clicks, or opens the panel. The client no longer queries status on mount; a blank conversation by itself should not create a status row. This is a deliberate trade-off of the current command-based data channel; a future Host Remote/HTTP endpoint would remove the rows entirely.
+
 ## Storage
 
 ```text

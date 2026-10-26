@@ -297,6 +297,33 @@ window.__ModuleLoader__.load({
       return JSON.parse(text)
     }
 
+    /** Short-lived, UI-only cache so the Hero, composer pill and panel share one status read. */
+    const STATUS_TTL_MS = 30_000
+    const statusCache = new Map()
+
+    async function requestStatus(sessionId, line, kind, force = false) {
+      if (sessionId === undefined) throw new Error('no session')
+      const key = `${sessionId}:${kind}`
+      const now = Date.now()
+      const cached = statusCache.get(key)
+      if (!force && cached !== undefined) {
+        if (cached.value !== undefined && now - cached.at < STATUS_TTL_MS) return cached.value
+        if (cached.promise !== undefined) return cached.promise
+      }
+      const promise = readStatus(sessionId, line)
+        .then((value) => {
+          statusCache.set(key, { at: Date.now(), value })
+          return value
+        })
+        .catch((error) => {
+          const current = statusCache.get(key)
+          if (current?.promise === promise) statusCache.delete(key)
+          throw error
+        })
+      statusCache.set(key, { at: now, promise })
+      return promise
+    }
+
     function formatNumber(value) {
       const number = Number(value)
       return Number.isFinite(number) ? number.toLocaleString() : '?'
@@ -365,7 +392,17 @@ window.__ModuleLoader__.load({
       const sessionId = props.sessionId
       const useSessions = props.useSessions
       const blank = useSessions ? useSessions((state) => state?.byId?.[sessionId]?.blank) : undefined
+      const priorCount = useSessions
+        ? useSessions((state) => {
+            const current = state?.byId?.[sessionId]
+            if (!current?.cwd) return 0
+            return Object.values(state?.byId ?? {}).filter(
+              (row) => row?.id !== sessionId && row?.cwd === current.cwd && row?.blank === false,
+            ).length
+          })
+        : 0
       const [status, setStatus] = React.useState(null)
+      const [checking, setChecking] = React.useState(false)
       const [busy, setBusy] = React.useState(false)
       const [prepared, setPrepared] = React.useState(false)
       const [dialog, setDialog] = React.useState(false)
@@ -373,32 +410,6 @@ window.__ModuleLoader__.load({
       const [fatalError, setFatalError] = React.useState(null)
       const [tip, setTip] = React.useState(null)
       const buttonRef = React.useRef(null)
-
-      React.useEffect(() => {
-        let alive = true
-        let retry
-        const load = async (attempt) => {
-          try {
-            const next = await readStatus(sessionId, '/memory inject-status --json')
-            if (alive) {
-              setStatus(next)
-              setPrepared(next.pending === true)
-            }
-          } catch (cause) {
-            if (!alive) return
-            if (attempt > 0) retry = setTimeout(() => load(attempt - 1), 800)
-            else {
-              console.warn('[workspace-memory] inject-status failed:', cause)
-              setFatalError(cause instanceof Error ? cause.message : String(cause))
-            }
-          }
-        }
-        load(3)
-        return () => {
-          alive = false
-          clearTimeout(retry)
-        }
-      }, [sessionId, blank])
 
       React.useEffect(() => {
         if (props.overlay) return undefined
@@ -414,6 +425,24 @@ window.__ModuleLoader__.load({
         window.addEventListener('keydown', onKey)
         return () => window.removeEventListener('keydown', onKey)
       }, [dialog, busy])
+
+      const ensureStatus = async (force = false) => {
+        setChecking(true)
+        try {
+          const next = await requestStatus(sessionId, '/memory inject-status --json', 'inject', force)
+          setStatus(next)
+          setPrepared(next.pending === true)
+          setFatalError(null)
+          return next
+        } catch (cause) {
+          const message = cause instanceof Error ? cause.message : String(cause)
+          console.warn('[workspace-memory] inject-status failed:', cause)
+          setFatalError(message)
+          return undefined
+        } finally {
+          setChecking(false)
+        }
+      }
 
       if (blank === false) return null
       if (fatalError) {
@@ -437,44 +466,35 @@ window.__ModuleLoader__.load({
           `${strings.statusFailed}: ${fatalError}`,
         )
       }
-      if (!status) {
-        return h(
-          'span',
-          {
-            title: strings.checking,
-            style: {
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 6,
-              fontSize: 12,
-              color: 'var(--dsw-alias-label-secondary)',
-            },
-          },
-          h(Icon, { size: 14 }),
-          strings.memoryShort,
-        )
-      }
-      if (status.alreadyInjected) return null
-      if (!status.canInject && status.pending !== true && prepared !== true) return null
+      if (!(priorCount > 0 || status?.canInject === true || status?.pending === true || prepared)) return null
+      if (status?.alreadyInjected === true) return null
 
       const showTip = () => {
         const node = buttonRef.current
         if (!node) return
         const rect = node.getBoundingClientRect()
         setTip({ left: Math.max(8, Math.min(rect.left, window.innerWidth - 340)), top: rect.bottom + 8 })
+        if (!checking) void ensureStatus(false)
+      }
+
+      const reasonText = (reason) => {
+        if (reason === 'no-other-content') return strings.noSources
+        if (reason === 'not-blank') return strings.notBlank
+        if (reason === 'no-model') return strings.noModel
+        if (reason === 'already-injected') return strings.pending
+        return reason ?? strings.statusFailed
       }
 
       const openDialog = async () => {
         setError(null)
         setTip(null)
-        try {
-          const next = await readStatus(sessionId, '/memory inject-status --json')
-          setStatus(next)
-          setPrepared(next.pending === true)
-          setDialog(true)
-        } catch (cause) {
-          setError(cause instanceof Error ? cause.message : String(cause))
+        const next = await ensureStatus(false)
+        if (next === undefined) return
+        if (next.canInject !== true && next.pending !== true) {
+          setFatalError(reasonText(next.reason))
+          return
         }
+        setDialog(true)
       }
 
       const confirm = async () => {
@@ -526,28 +546,31 @@ window.__ModuleLoader__.load({
               },
             },
             h('div', { style: { fontWeight: 600, marginBottom: 4 } }, strings.tooltipTitle),
-            h('div', null, strings.sourceLine(status.sourceCount)),
-            h(
-              'div',
-              null,
-              `${strings.model}: ${formatModel(strings, status.model)}`,
-            ),
-            h(
-              'div',
-              null,
-              `${strings.injection}: ${formatNumber(status.estimate.injectTokens)} tokens`,
-            ),
-            h('div', { style: { marginTop: 4, opacity: 0.8 } }, strings.tooltipNoCall),
+            status
+              ? h(
+                  React.Fragment,
+                  null,
+                  h('div', null, strings.sourceLine(status.sourceCount)),
+                  h('div', null, `${strings.model}: ${formatModel(strings, status.model)}`),
+                  h(
+                    'div',
+                    null,
+                    `${strings.injection}: ${formatNumber(status.estimate.injectTokens)} tokens`,
+                  ),
+                  h('div', { style: { marginTop: 4, opacity: 0.8 } }, strings.tooltipNoCall),
+                )
+              : h('div', { style: { opacity: 0.8 } }, checking ? strings.checking : strings.tooltipNoCall),
           )
         : null
 
-      const buttonLabel = prepared || status.pending ? strings.pending : strings.inject
+      const pending = status?.pending === true || prepared
+      const buttonLabel = pending ? strings.pending : strings.inject
       const button = h(
         'button',
         {
           ref: buttonRef,
           type: 'button',
-          disabled: busy || prepared || status.pending,
+          disabled: busy || pending,
           onClick: openDialog,
           onMouseEnter: showTip,
           onMouseLeave: () => setTip(null),
@@ -567,8 +590,8 @@ window.__ModuleLoader__.load({
             display: 'inline-flex',
             alignItems: 'center',
             gap: 7,
-            color: prepared || status.pending ? 'var(--dsw-alias-state-success-primary)' : 'var(--dsw-alias-label-primary)',
-            cursor: busy || prepared || status.pending ? 'default' : 'pointer',
+            color: pending ? 'var(--dsw-alias-state-success-primary)' : 'var(--dsw-alias-label-primary)',
+            cursor: busy || pending ? 'default' : 'pointer',
           },
           'aria-label': strings.inject,
         },
@@ -800,12 +823,12 @@ window.__ModuleLoader__.load({
       const [copied, setCopied] = React.useState(false)
       const [loading, setLoading] = React.useState(false)
 
-      const refresh = async () => {
+      const refresh = async (force = false) => {
         if (sessionId === undefined) return
         setLoading(true)
         setError(null)
         try {
-          const next = await readStatus(sessionId, '/memory status --json')
+          const next = await requestStatus(sessionId, '/memory status --json', 'panel', force === true)
           setStatus(next)
           setNotes(next.notes ?? '')
           setProvider(next.curatorOverride?.provider ?? '')
@@ -837,6 +860,7 @@ window.__ModuleLoader__.load({
           let binary = ''
           for (const byte of bytes) binary += String.fromCharCode(byte)
           await runCommand(sessionId, `/memory notes set ${btoa(binary)}`)
+          statusCache.clear()
           setSaved(true)
           setError(null)
         } catch (cause) {
@@ -852,8 +876,10 @@ window.__ModuleLoader__.load({
           } else {
             await runCommand(sessionId, `/memory curator set ${provider.trim()} ${model.trim()}`)
           }
+          statusCache.clear()
           setRouteSaved(true)
           setError(null)
+          await refresh(true)
         } catch (cause) {
           setError(cause instanceof Error ? cause.message : String(cause))
         }
@@ -862,8 +888,9 @@ window.__ModuleLoader__.load({
       const reset = async () => {
         try {
           await runCommand(sessionId, '/memory reset --confirm')
+          statusCache.clear()
           setResetOpen(false)
-          await refresh()
+          await refresh(true)
         } catch (cause) {
           setError(cause instanceof Error ? cause.message : String(cause))
         }
@@ -919,7 +946,7 @@ window.__ModuleLoader__.load({
               h(LanguageToggle),
               h(
                 'button',
-                { type: 'button', onClick: refresh, disabled: loading, style: buttonStyle(false) },
+                { type: 'button', onClick: () => refresh(true), disabled: loading, style: buttonStyle(false) },
                 loading ? strings.loading : strings.refresh,
               ),
             ),

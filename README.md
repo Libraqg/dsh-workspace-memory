@@ -187,6 +187,13 @@ There is one model call per confirmed injection:
 
 The confirmation dialog shows all three estimates. They are local heuristics, not a billing guarantee; the panel records the provider-reported usage when available.
 
+
+### Status reads and the transcript
+
+The confirmation layer needs host-side status (sources, curator route, token estimates). It reads that through DSH's local command channel (`/memory inject-status --json` and `/memory status --json`). These are **local commands, not model calls**: they never enter model context and cost no tokens.
+
+DSH logs command executions, so a `memory` command row can appear in the **detailed transcript** when you hover, click, or open the panel. The UI no longer queries status on mount, so opening a blank conversation should not create a command row by itself.
+
 ## Privacy and security
 
 - Memory state is local: `~/.dsh/workspace-memory/<project-hash>/`.
