@@ -10,6 +10,7 @@
     <img src="https://img.shields.io/badge/DSH-%3E%3D0.2.1--rc.2-6f42c1" alt="DSH >= 0.2.1-rc.2">
     <img src="https://img.shields.io/badge/node-%3E%3D22.19-339933" alt="Node >= 22.19">
     <a href="https://www.npmjs.com/package/@libraqg/dsh-workspace-memory"><img src="https://img.shields.io/npm/v/@libraqg/dsh-workspace-memory.svg" alt="npm"></a>
+    <a href="https://dsh-plugin.org/plugins/libraqg/dsh-workspace-memory"><img src="https://dsh-plugin.org/badges/listed.svg" alt="Listed on dsh-plugin.org"></a>
     <a href="https://github.com/awesome-dsh-plugin/awesome-dsh-plugin"><img src="https://awesome-dsh-plugin.com/badge.svg" alt="DSH plugin"></a>
   </p>
 </div>
